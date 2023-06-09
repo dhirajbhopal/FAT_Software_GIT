@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://fbktnsetnet.000webhostapp.com/wp-content/uploads/2018/04/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.debug.js"></script>
+<script type="text/javascript">
+function generatePDF(){
+    var div = document.querySelector('#someHtml')
+    var imgData
+    html2canvas(div,{
+        useCORS:true,
+        onrendered:function(canvas){
+            imgData = canvas.toDataURL('image/png')
+
+            var doc = new jsPDF('p','pt','a4')
+
+            doc.addImage(imgData,'PNG',10,10)
+
+            doc.save("output.pdf")
+
+            window.open(imgData)
+        }
+    })
+   }
+</script>
+<body>
+    <div id="someHtml">
+        <h1>This is some html</h1>
+        <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGFwdG9wfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60" alt="">
+    </div>
+    <button onclick="generatePDF()">Generate PDF</button>
+</body>
+</html>
